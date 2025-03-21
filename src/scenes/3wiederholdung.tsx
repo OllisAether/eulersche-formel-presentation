@@ -202,8 +202,8 @@ export default makeScene2D(function* (view) {
   const random = useRandom(1001023)
 
   yield* loop(2, (i) => all(
-    zRe(random.nextFloat(-2, 2), 1, easeInOutExpo),
-    zIm(random.nextFloat(-2, 2), 1, easeInOutExpo),
+    zRe(random.nextFloat(-2, 2), 1.5, easeInOutExpo),
+    zIm(random.nextFloat(-2, 2), 1.5, easeInOutExpo),
   ))
 
   yield* all(

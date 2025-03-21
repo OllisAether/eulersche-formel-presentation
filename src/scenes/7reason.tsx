@@ -18,7 +18,7 @@ export default makeScene2D(function* (view) {
 
   yield* title().text('WARUM?', 1)
 
-  yield* beginSlide('reason')
+  // yield* waitFor(0.5)
 
   const coords = createRef<CoordinateSystem>()
 

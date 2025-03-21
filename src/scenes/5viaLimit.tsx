@@ -81,13 +81,22 @@ export default makeScene2D(function* (view) {
     secondaryTex().opacity(0, 1, easeInOutExpo)
   )
 
-  secondaryTex().remove()
-
   yield* beginSlide('viaLimit_formel_lim')
 
-  yield* mainTex().tex('{{e}}^{i\\varphi}{{=\\lim_{n\\to\\infty}}}{{\\left(1+}}\\frac{i\\varphi}{n}{{\\right)^n}}', 0.5)
+  yield* mainTex().tex('{{e}}^{i\\varphi}{{=\\lim_{n\\to\\infty}}}{{\\left(1+}}{{\\frac}}{ {{i}}{{\\varphi}} }{{{n}}}{{\\right)^n}}', 0.5)
+  yield* mainTex().tex('{{e}}^{i\\varphi}{{=\\lim_{n\\to\\infty}}}{{\\left(1+}}{{i}}{{\\frac}}{ {{\\varphi}} }{{{n}}}{{\\right)^n}}', 1)
 
   yield* beginSlide('viaLimit_formel_i')
+
+  secondaryTex()
+    .fontSize(80)
+    .y(300)
+    .tex('\\bigl(r\\cdot\\text{cis}(\\varphi)\\bigl)^n=r^n\\cdot\\text{cis}(n\\varphi)')
+  yield* all(
+    secondaryTex().opacity(1, 1, easeInOutExpo)
+  )
+
+  yield* beginSlide('viaLimit_formel_lim_polar-axioms')
 
   function pow(re: number, im: number, n: number) {
     let _re = re
@@ -249,6 +258,7 @@ export default makeScene2D(function* (view) {
       y: view.height() / 2 - 50
     }, 1, easeInOutExpo),
     mainTex().scale(0.6, 1, easeInOutExpo),
+    secondaryTex().opacity(0, 1, easeInOutExpo),
 
     coords().start(0.5).start(0, 1),
     coords().end(0.5).end(1, 1),
@@ -315,19 +325,16 @@ export default makeScene2D(function* (view) {
 
   yield* beginSlide('viaLimit_limit_phi_label_pi')
 
-  yield* n(Number.MAX_SAFE_INTEGER, 1, easeInCubic)
-  nTex().tex('n={{\\infty}}')
-
-  yield* waitFor(1)
-
   yield* all(
     phiTexContainer().bottom({
       x: 0,
       y: view.height() / 2 - 50
     }, 1),
     phiTex().tex(`{{\\varphi=}}{{${(phi() / Math.PI).toFixed(2)}}}{{\\pi}}`, 1),
-    nTexContainer().opacity(0, 1)
+    n(Number.MAX_SAFE_INTEGER, 1, easeInCubic)
   )
+  nTex().tex('n={{\\infty}}')
+  yield* nTexContainer().opacity(0, 1)
 
   let phiEffect = createEffect(() => {
     phiTex().tex(`{{\\varphi=}}{{${(phi() / Math.PI).toFixed(2)}}}{{\\pi}}`)
@@ -397,13 +404,13 @@ export default makeScene2D(function* (view) {
 
   yield* beginSlide('viaLimit_to_polar')
 
-  yield* sequence(1.5,
-    phi(Math.PI * 1.25, 1.5, easeInOutExpo),
-    phi(Math.PI * 1.75, 1.5, easeInOutExpo),
-    phi(Math.PI * .3, 1.5, easeInOutExpo),
-  )
+  // yield* sequence(1.5,
+  //   phi(Math.PI * 1.25, 1.5, easeInOutExpo),
+  //   phi(Math.PI * 1.75, 1.5, easeInOutExpo),
+  //   phi(Math.PI * .3, 1.5, easeInOutExpo),
+  // )
 
-  yield* beginSlide('viaLimit_to_polar_example_phi')
+  // yield* beginSlide('viaLimit_to_polar_example_phi')
 
   yield* all(
     mainTex().middle(Vector2.zero, 1),
@@ -415,7 +422,8 @@ export default makeScene2D(function* (view) {
 
   yield* beginSlide('viaLimit_to_polarform_1')
 
-  yield* mainTex().tex('{{e}}^{i\\varphi}{{=}}\\cos({{\\varphi}})+{{i}}\\cdot \\sin({{\\varphi}})', 1)
+  mainTex().tex('{{e}}^{i\\varphi}{{=}}{{\\lim_{n\\to\\infty}}}{{\\left(1}}{{+}}{{i}}{{\\frac}}{ {{\\varphi}} }{{{n}}}{{\\right)^n}}')
+  yield* mainTex().tex('{{e}}^{i\\varphi}{{=}}\\cos({{\\varphi}}){{+}}{{i}}\\cdot \\sin({{\\varphi}})', 1)
   
   yield* beginSlide('viaLimit_to_polarform_2')
 

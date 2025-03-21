@@ -26,7 +26,7 @@ export default makeScene2D(function* (view) {
       ref={mulLatex}
       fontSize={64}
       fill={'#fff'}
-      tex={'{{z_1}} \\cdot {{z_2}} = {{r_1}}{{\\text{cis}}}({{\\varphi_1}}) \\cdot {{r_2}}{{\\text{cis}}}({{\\varphi_2}})'}
+      tex={'{{z_1}}{{ \\cdot }}{{z_2}} = {{r_1}}{{ \\text{cis} }}({{\\varphi_1}}){{ \\cdot }}{{r_2}}{{ \\text{cis} }}({{\\varphi_2}})'}
     />
   </>)
 
@@ -45,7 +45,7 @@ export default makeScene2D(function* (view) {
   yield* beginSlide('probleme_multiplikation_simplified_1');
 
   yield* all(
-    mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}{{r_2}} \\cdot {{\\text{cis}}}({{\\varphi_1}} + {{\\varphi_2}}{{)}}', 1),
+    mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}{{r_2}} \\cdot {{ \\text{cis} }}({{\\varphi_1}} + {{\\varphi_2}}{{)}}', 1),
     mulLatex().scale(1, 1, easeOutCubic),
   )
   
@@ -334,10 +334,10 @@ export default makeScene2D(function* (view) {
 
   yield* beginSlide('probleme_multiplikation_transformation_3');
 
-  yield* z2({ r: 1, phi: Math.PI * 1.1 }, 2, easeInOutExpo)
-  yield* z2({ r: 1.5, phi: Math.PI * 0.5 }, 2, easeInOutExpo)
-  yield* z1({ r: 1, phi: Math.PI * 0.1 }, 2, easeInOutExpo)
-  yield* z1({ r: 1, phi: Math.PI * 0.3 }, 2, easeInOutExpo)
+  yield* z2({ r: 1, phi: Math.PI * 1.1 }, 1, easeInOutExpo)
+  yield* z2({ r: 1.5, phi: Math.PI * 0.5 }, 1, easeInOutExpo)
+  yield* z1({ r: 1, phi: Math.PI * 0.1 }, 1, easeInOutExpo)
+  yield* z1({ r: 1, phi: Math.PI * 0.3 }, 1, easeInOutExpo)
 
   yield* beginSlide('probleme_multiplikation_transformation_4');
 
@@ -350,33 +350,34 @@ export default makeScene2D(function* (view) {
     mulLatex().tex('z^n=(r \\cdot \\text{cis}(\\varphi))^n', 1)
   )
 
-  mulLatex().tex('{{z^n = }}({{r}} \\cdot {{\\text{cis}}}({{\\varphi}}{{)}})^{{n}}')
-  yield* mulLatex().tex('{{z^n = }}{{r}}^{{n}} \\cdot {{\\text{cis}}}({{n}}{{\\varphi}}{{)}}', 1);
+  mulLatex().tex('{{z}}{{^n}}{{=}}{{\\left(}}{{r}} \\cdot {{ \\text{cis} }}{{(}}{{\\varphi}}{{)}}\\right)^{{n}}')
+  yield* mulLatex().tex('{{z}}{{^n}}{{=}}{{r}}^{{n}} \\cdot {{ \\text{cis} }}{{(}}{{n}}{{\\varphi}}{{)}}', 1);
 
   yield* beginSlide('probleme_potenz');
 
-  yield* mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}\\text{cis}({{\\varphi_1}}) \\cdot {{r_2}}\\text{cis}({{\\varphi_2}})', 1);
+  yield* mulLatex().tex('{{z}}{{_1}} \\cdot {{z}}{{_2}} = {{r}}{{_1}}{{ \\text{cis} }}({{\\varphi}}{{_1}}{{)}} \\cdot {{r}}{{_2}}{{ \\text{cis} }}({{\\varphi}}{{_2}})', 1);
 
   yield* beginSlide('probleme_multiplikation_1');
-
+  
+  mulLatex().tex('{{z_1 \\cdot z_2}}{{=}}{{r_1}}{{\\text{cis}}}{{(}}{{\\varphi_1}}{{)}} \\cdot {{r_2}}{{\\text{cis}}}({{\\varphi_2}})'),
   yield* all(
     mulLatex().scale(.8, 1, easeInCubic),
-    mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}(\\cos({{\\varphi_1}}) + i \\sin({{\\varphi_1}})) \\cdot {{r_2}}(\\cos({{\\varphi_2}}) + i \\sin({{\\varphi_2}}))', 1),
+    mulLatex().tex('{{z_1 \\cdot z_2}}{{=}}{{r_1}}{{(}}{{\\cos}}{{(}}{{\\varphi_1}}{{)}} {{+}} {{i}} {{\\sin}}{{(}}{{\\varphi_1}}{{)}}{{)}} \\cdot {{r_2}}({{\\cos}}({{\\varphi_2}}{{)}} {{+}} {{i}} {{\\sin}}({{\\varphi_2}}{{)}})', 1),
   ),
   yield* all(
     mulLatex().scale(.6, 1, easeOutCubic),
-    mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}{{r_2}}(\\cos({{\\varphi_1}})\\cos({{\\varphi_2}}) - \\sin({{\\varphi_1}})\\sin({{\\varphi_2}}) + i(\\cos({{\\varphi_1}})\\sin({{\\varphi_2}}) + \\sin({{\\varphi_1}})\\cos({{\\varphi_2}})))', 1),
+    mulLatex().tex('{{z_1 \\cdot z_2}}{{=}}{{r_1}}{{r_2}}({{\\cos}}({{\\varphi_1}}){{\\cos}}({{\\varphi_2}}{{)}} - {{\\sin}}({{\\varphi_1}}){{\\sin}}({{\\varphi_2}}{{)}} {{+}} {{i}} ({{\\cos}}({{\\varphi_1}}){{\\sin}}({{\\varphi_2}}{{)}} + {{\\sin}}({{\\varphi_1}}){{\\cos}}({{\\varphi_2}}{{)}}{{)}})', 1),
   )
 
   yield* beginSlide('probleme_multiplikation_2');
 
   yield* all(
-    mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}{{r_2}}(\\cos({{\\varphi_1}} + {{\\varphi_2}}) + i \\sin({{\\varphi_1}} + {{\\varphi_2}}))', 1),
+    mulLatex().tex('{{z_1 \\cdot z_2}}{{=}}{{r_1}}{{r_2}}({{\\cos}}({{\\varphi_1}} + {{\\varphi_2}}{{)}} {{+}} {{i}} {{\\sin}}({{\\varphi_1}} + {{\\varphi_2}}{{)}})', 1),
     mulLatex().scale(.8, 1, easeInCubic),
   )
 
   yield* all(
-    mulLatex().tex('{{z_1}} \\cdot {{z_2}} = {{r_1}}{{r_2}} \\cdot {{\\text{cis}}}({{\\varphi_1}} + {{\\varphi_2}}{{)}}', 1),
+    mulLatex().tex('{{z_1 \\cdot z_2}} = {{r_1}}{{r_2}}{{\\cdot}}{{\\text{cis}}}{{(}}{{\\varphi_1}} + {{\\varphi_2}}{{)}}', 1),
     mulLatex().scale(1, 1, easeOutCubic),
   )
 

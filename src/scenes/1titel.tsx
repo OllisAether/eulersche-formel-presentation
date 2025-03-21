@@ -15,6 +15,7 @@ export default makeScene2D(function* (view) {
   const coords = createRef<CoordinateSystem>()
   const unitCircle = createRef<Node>()
   const title = createRef<Txt>()
+  const title2 = createRef<Txt>()
   const titleTex = createRef<Latex>()
 
   // Preload fonts
@@ -136,6 +137,18 @@ export default makeScene2D(function* (view) {
 
       </CoordinateSystem>
       <Txt
+        ref={title2}
+        y={-300}
+        fontSize={160}
+        fill="#fff"
+        fontWeight={700}
+        opacity={0}
+        fontFamily={titleFont}
+        textAlign={'center'}
+      >
+        EULER'SCHE IDENTITÄT
+      </Txt>
+      <Txt
         ref={title}
         x={unit * 1.5}
         y={unit * -0.2}
@@ -200,9 +213,10 @@ export default makeScene2D(function* (view) {
 
   yield* all(
     coords().opacity(0, 0.5),
-    title().text('EULER\'SCHE IDENTITÄT', 0.5),
-    title().top({ x: 0, y: -view.height() / 2 + 100 }, 1),
-    title().scale(0.5, 1),
+    title().opacity(0, 0.5),
+    title2().opacity(1, 1, easeInOutExpo),
+    title2().y(-600).y(-400, 1, easeInOutExpo),
+
     titleTex().middle(0, 1),
     titleTex().tex(['e', '^{i', '\\pi', '}', '+', '1=0'], 1),
     titleTex().scale(3, 1)
@@ -215,13 +229,13 @@ export default makeScene2D(function* (view) {
     titleTex().x(unit * 1.5, 1),
     titleTex().y(unit * 0.5, 1),
     titleTex().scale(1, 1),
+    title2().y(-600, 1, easeInOutExpo),
 
-    title().text('EULER\'SCHE FORMEL', 1),
-    title().x(unit * 1.5, 1),
-    title().y(unit * -0.2, 1),
-    title().scale(1, 1),
-
-    coords().opacity(1, 1),
+    delay(0.5, all(
+      title().opacity(1, 0.5),
+      title2().opacity(0, 0.5),
+      coords().opacity(1, 0.5),
+    ))
   )
 
   yield* beginSlide('titleSlide_eulers-identity_end')

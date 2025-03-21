@@ -1,6 +1,7 @@
-import {Circle, Latex, makeScene2D, Node, Rect} from '@motion-canvas/2d';
+import {Circle, Latex, makeScene2D, Node, Ray, Rect} from '@motion-canvas/2d';
 import {all, beginSlide, createRef, delay, easeInCubic, easeInOutExpo, makeRef, range, waitFor, waitUntil} from '@motion-canvas/core';
 import { makeConfetti } from '../confetti';
+import { backgroundColor } from '../vars';
 
 export default makeScene2D(function* (view) {
   const mainTex = createRef<Latex>()
@@ -36,30 +37,70 @@ export default makeScene2D(function* (view) {
   const radius = 250
   view.add(<>
     <Rect y={150} ref={iCircle}>
-      <Latex
-        tex={'1'}
-        fill={'#fff'}
-        fontSize={50}
+      <Ray
+        stroke={'#88888a'}
+        lineWidth={5}
+        endArrow
+        arrowSize={15}
+        fromY={radius * 1.4}
+        toY={-radius * 1.4}
+      />
+      <Ray
+        stroke={'#88888a'}
+        lineWidth={5}
+        endArrow
+        arrowSize={15}
+        fromX={-radius * 1.4}
+        toX={radius * 1.4}
+      />
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         x={radius}
-      />
-      <Latex
-        tex={'i'}
-        fill={'#fff'}
-        fontSize={50}
+      >
+        <Latex
+          tex={'1'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         y={-radius}
-      />
-      <Latex
-        tex={'-1'}
-        fill={'#fff'}
-        fontSize={50}
+      >
+        <Latex
+          tex={'i'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         x={-radius}
-      />
-      <Latex
-        tex={'-i'}
-        fill={'#fff'}
-        fontSize={50}
+      >
+        <Latex
+          tex={'-1'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         y={radius}
-      />
+      >
+        <Latex
+          tex={'-i'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
       {range(4).map(i => <Node>
         <Circle
           ref={makeRef(arrows, i)}
@@ -149,21 +190,19 @@ export default makeScene2D(function* (view) {
 
   yield* beginSlide('viaTaylor_inset_cycle_2')
 
+  yield* all(
+    iCircle().opacity(0, 1, easeInOutExpo),
+    iCycleEquations().opacity(0, 1, easeInOutExpo),
+    mainTex().y(0, 1, easeInOutExpo),
+  )
   mainTex().tex('{{e}}^{i\\varphi}{{=}} 1 + i\\varphi {{+}} {{\\frac}}{({{i}}{{\\varphi}}){{^2}}}{{{2}}{{!}}} + {{\\frac}}{({{i}}{{\\varphi}}){{^3}}}{{{3}}{{!}}} + {{\\frac}}{({{i}}{{\\varphi}}){{^4}}}{{{4}}{{!}}} + {{\\frac}}{({{i}}{{\\varphi}}){{^5}}}{{{5}}{{!}}} + {...}')
   yield* mainTex().tex('{{e}}^{i\\varphi}{{=}} 1 + i\\varphi {{+}} {{\\frac}}{-{{\\varphi}}{{^2}}}{{{2}}{{!}}} + {{\\frac}}{{{-i}}{{\\varphi}}{{^3}}}{{{3}}{{!}}} + {{\\frac}}{{{}}{{\\varphi}}{{^4}}}{{{4}}{{!}}} + {{\\frac}}{{{i}}{{\\varphi}}{{^5}}}{{{5}}{{!}}} + {...}', 1)
   
   mainTex().tex('e^{i\\varphi}= 1 + i\\varphi {{+}} \\frac{{{-}}\\varphi^2}{2!} {{+}} \\frac{{{-}}i\\varphi^3}{3!} + \\frac{\\varphi^4}{4!} + \\frac{i\\varphi^5}{5!} {{+}} {{{...}}}')
   yield* mainTex().tex('e^{i\\varphi}= 1 + i\\varphi {{-}} \\frac{{{}}\\varphi^2}{2!} {{-}} \\frac{{{}}i\\varphi^3}{3!} + \\frac{\\varphi^4}{4!} + \\frac{i\\varphi^5}{5!} {{-}} {{{...}}}', 1)
   
+
   yield* beginSlide('viaTaylor_inset_cycle_3')
-
-  yield* all(
-    iCircle().opacity(0, 1, easeInOutExpo),
-    iCycleEquations().opacity(0, 1, easeInOutExpo),
-    mainTex().y(0, 1, easeInOutExpo),
-  )
-
-  yield* beginSlide('viaTaylor_inset_cycle_4')
 
   mainTex().tex('e^{i\\varphi}= 1 {{+ i\\varphi}} {{- \\frac{\\varphi^2}{2!}}} {{- \\frac{i\\varphi^3}{3!}}} {{+ \\frac{\\varphi^4}{4!}}} {{+ \\frac{i\\varphi^5}{5!}}} - {{{...}}}')
   yield* mainTex().tex('e^{i\\varphi}= 1 {{- \\frac{\\varphi^2}{2!}}} {{+ \\frac{\\varphi^4}{4!}}} - {{{...}}} {{+ i\\varphi}} {{- \\frac{i\\varphi^3}{3!}}} {{+ \\frac{i\\varphi^5}{5!}}} - {{{...}}}', 1)
@@ -177,7 +216,7 @@ export default makeScene2D(function* (view) {
     mainTex().tex('e^{i\\varphi}= 1 {{- \\frac{\\varphi^2}{2!}}} {{+ \\frac{\\varphi^4}{4!}}} {{- \\frac{\\varphi^6}{6!}}} {{+ \\frac{\\varphi^8}{8!}}} - {{{...}}} + {{i}}\\left({{\\varphi}} {{- \\frac{\\varphi^3}{3!}}} {{+ \\frac{\\varphi^5}{5!}}} {{- \\frac{\\varphi^7}{7!}}} {{+ \\frac{\\varphi^9}{9!}}} {{-}} {{{...}}}\\right)', 1)
   )
 
-  yield* beginSlide('viaTaylor_inset_cycle_5')
+  yield* beginSlide('viaTaylor_inset_cycle_4')
 
   const sinSeries = createRef<Latex>()
   const cosSeries = createRef<Latex>()
@@ -205,9 +244,9 @@ export default makeScene2D(function* (view) {
     cosSeries().opacity(0).opacity(1, 1, easeInOutExpo),
   )
 
-  yield* beginSlide('viaTaylor_inset_cycle_6')
+  yield* beginSlide('viaTaylor_inset_cycle_5')
 
-  mainTex().tex('{{e^{i\\varphi}}} {{=}} 1 - \\frac{\\varphi^2}{2!} + \\frac{\\varphi^4}{4!} - \\frac{\\varphi^6}{6!} + \\frac{\\varphi^8}{8!} - {...} {{+}} {{i}}\\left(x - \\frac{\\varphi^3}{3!} + \\frac{\\varphi^5}{5!} - \\frac{\\varphi^7}{7!} + \\frac{\\varphi^9}{9!} - {...}\\right)')
+  mainTex().tex('{{e^{i\\varphi}}} {{=}} 1 - \\frac{\\varphi^2}{2!} + \\frac{\\varphi^4}{4!} - \\frac{\\varphi^6}{6!} + \\frac{\\varphi^8}{8!} - {...} {{+}} {{i}}\\left(\\varphi - \\frac{\\varphi^3}{3!} + \\frac{\\varphi^5}{5!} - \\frac{\\varphi^7}{7!} + \\frac{\\varphi^9}{9!} - {...}\\right)')
   yield* all(
     mainTex().tex('{{e^{i\\varphi}}} {{=}} \\cos({{\\varphi}}){{+}}{{i}}\\cdot \\sin({{\\varphi}})', 1),
     mainTex().scale(0.8, 1, easeInOutExpo),
@@ -222,7 +261,7 @@ export default makeScene2D(function* (view) {
     cosSeries().opacity(0, 1, easeInOutExpo),
   )
 
-  yield* beginSlide('viaTaylor_inset_cycle_7')
+  yield* beginSlide('viaTaylor_inset_cycle_6')
 
   yield* makeConfetti(view, 0.3);
 

@@ -204,7 +204,6 @@ export default makeScene2D(function* (view) {
   const zReUnit = createSignal(() => unit * zRe())
   const zImUnit = createSignal(() => unit * -zIm())
 
-
   const dot = createRef<Circle>() 
   const line = createRef<Line>()
 
@@ -303,8 +302,6 @@ export default makeScene2D(function* (view) {
   yield loopRPhi
 
   yield* beginSlide('inhalt_1')
-  yield* hightlight(1);
-  cancel(loopRPhi)
 
   const problems = createRef<Rect>()
   const problemsTex = createRef<Latex>()
@@ -360,6 +357,7 @@ export default makeScene2D(function* (view) {
   })
 
   yield* all(
+    hightlight(1),
     recap().opacity(0, 0.5),
     coords().end(0.5, 1),
     coords().start(0.5, 1),
@@ -373,13 +371,12 @@ export default makeScene2D(function* (view) {
     )
   )
   recap().remove()
+  cancel(loopRPhi)
 
   yield* waitFor(0.5)
   yield problemLoop
 
   yield* beginSlide('inhalt_2')
-  yield* hightlight(2);
-  cancel(problemLoop)
 
   const eFormula = createRef<Latex>()
 
@@ -389,6 +386,7 @@ export default makeScene2D(function* (view) {
   layout().add(<>
     <Latex
       ref={eFormula}
+      opacity={0}
       tex={limTex}
       fontSize={80}
       fill={'#fff'}
@@ -396,9 +394,12 @@ export default makeScene2D(function* (view) {
   </>)
 
   yield* all(
+    hightlight(2),
+    eFormula().opacity(1, 0.5),
     problems().opacity(0, 0.5),
   )
 
+  cancel(problemLoop)
   problems().remove()
 
   const eLoop = loop(Infinity, () => chain(
@@ -408,16 +409,9 @@ export default makeScene2D(function* (view) {
     eFormula().tex(limTex, 1),
   ))
   yield eLoop
-  
-  yield* beginSlide('inhalt_3')
-  yield* waitFor(0.5)
-  cancel(eLoop)
 
-  yield* hightlight(3);
-  
-  yield* all(
-    eFormula().opacity(0, 0.5),
-  )
+  yield* beginSlide('inhalt_3')
+
   unit = view.width() / 15
 
   function pow(re: number, im: number, n: number) {
@@ -570,13 +564,13 @@ export default makeScene2D(function* (view) {
     nTexContainer().opacity(0).opacity(1, 1),
     pointRef().opacity(0).opacity(1, 1),
     ...linesRef.map(l => l.opacity(0).opacity(1, 1)),
+    hightlight(3),
+    eFormula().opacity(0, 0.5),
   )
 
-  yield* beginSlide('inhalt_4')
-  yield* hightlight(4);
-  pointsEffect()
-  cancel(nLoop)
+  cancel(eLoop)
 
+  yield* beginSlide('inhalt_4')
 
   const arrows: Circle[] = []
   const iCircleLabels: Latex[] = []
@@ -594,30 +588,70 @@ export default makeScene2D(function* (view) {
       tex={'{{e}}^{{{ix}}}{{=}} 1 + {{ix}} + {{\\frac}}{{{(ix)}}^{{2}}}{{{2}}{{!}}} + {{\\frac}}{{{(ix)}}^{{3}}}{{{3}}{{!}}} + {{\\frac}}{{{(ix)}}^{{4}}}{{{4}}{{!}}} + {{\\frac}}{{{(ix)}}^{{5}}}{{{5}}{{!}}} + {...}'}
     />
     <Rect y={150} ref={iCircle}>
-      <Latex
-        tex={'1'}
-        fill={'#fff'}
-        fontSize={50}
+      <Ray
+        stroke={'#88888a'}
+        lineWidth={5}
+        endArrow
+        arrowSize={15}
+        fromY={iRadius * 1.4}
+        toY={-iRadius * 1.4}
+      />
+      <Ray
+        stroke={'#88888a'}
+        lineWidth={5}
+        endArrow
+        arrowSize={15}
+        fromX={-iRadius * 1.4}
+        toX={iRadius * 1.4}
+      />
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         x={iRadius}
-      />
-      <Latex
-        tex={'i'}
-        fill={'#fff'}
-        fontSize={50}
+      >
+        <Latex
+          tex={'1'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         y={-iRadius}
-      />
-      <Latex
-        tex={'-1'}
-        fill={'#fff'}
-        fontSize={50}
+      >
+        <Latex
+          tex={'i'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         x={-iRadius}
-      />
-      <Latex
-        tex={'-i'}
-        fill={'#fff'}
-        fontSize={50}
+      >
+        <Latex
+          tex={'-1'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
+      <Rect
+        fill={backgroundColor}
+        layout
+        padding={10}
         y={iRadius}
-      />
+      >
+        <Latex
+          tex={'-i'}
+          fill={'#fff'}
+          fontSize={50}
+        />
+      </Rect>
       {range(4).map(i => <Node>
         <Circle
           ref={makeRef(arrows, i)}
@@ -659,12 +693,14 @@ export default makeScene2D(function* (view) {
       label.opacity(0)
       return delay(0.5, label.opacity(1, 1, easeInOutExpo))
     }),
+    hightlight(4),
   )
 
+  pointsEffect()
+  cancel(nLoop)
   coords().remove()
 
   yield* beginSlide('inhalt_5')
-  yield* hightlight(5);
 
   const eIdentity = createRef<Latex>()
   layout().add(<>
@@ -678,10 +714,14 @@ export default makeScene2D(function* (view) {
   </>)
 
   yield* all(
-    iCircle().opacity(0, 1),
-    taylorTex().opacity(0, 1), 
-    eIdentity().opacity(1, 1),
+    iCircle().opacity(0, 0.5),
+    taylorTex().opacity(0, 0.5), 
+    eIdentity().opacity(1, 0.5),
+    hightlight(5)
   )
+
+  taylorTex().remove()
+  iCircle().remove()
 
   yield* beginSlide('inhalt_6')
 
