@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Thunder LC';
+  src: url('/fonts/Thunder-BoldLC.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
