@@ -1,6 +1,6 @@
 import { Circle, Latex, Line, makeScene2D, Node, Ray, Rect, Txt } from '@motion-canvas/2d';
 import { all, beginSlide, cancel, chain, createEffect, createRef, createSignal, delay, easeInCubic, easeInOutExpo, easeOutCubic, easeOutExpo, linear, loop, makeRef, range, sequence, Vector2, waitFor, waitUntil } from '@motion-canvas/core';
-import { backgroundColor, monoFont, titleFont } from '../vars';
+import { monoFont, titleFont } from '../vars';
 import { CoordinateSystem } from '../components/CoordinateSystem';
 
 export default makeScene2D(function* (view) {
@@ -196,7 +196,6 @@ export default makeScene2D(function* (view) {
     x: 24,
     y: -layout().height() / 2 + 12
   })
-
 
   const zRe = createSignal(0)
   const zIm = createSignal(0)
@@ -538,7 +537,7 @@ export default makeScene2D(function* (view) {
       ref={nTexContainer}
       width={() => nTex().width() + 40}
       height={() => nTex().height() + 40}
-      fill={backgroundColor}
+      fill={'rgb(9, 8, 11)'}
     >
       <Latex
         ref={nTex}
@@ -605,7 +604,7 @@ export default makeScene2D(function* (view) {
         toX={iRadius * 1.4}
       />
       <Rect
-        fill={backgroundColor}
+        fill={'rgb(9, 8, 11)'}
         layout
         padding={10}
         x={iRadius}
@@ -617,7 +616,7 @@ export default makeScene2D(function* (view) {
         />
       </Rect>
       <Rect
-        fill={backgroundColor}
+        fill={'rgb(9, 8, 11)'}
         layout
         padding={10}
         y={-iRadius}
@@ -629,7 +628,7 @@ export default makeScene2D(function* (view) {
         />
       </Rect>
       <Rect
-        fill={backgroundColor}
+        fill={'rgb(9, 8, 11)'}
         layout
         padding={10}
         x={-iRadius}
@@ -641,7 +640,7 @@ export default makeScene2D(function* (view) {
         />
       </Rect>
       <Rect
-        fill={backgroundColor}
+        fill={'rgb(9, 8, 11)'}
         layout
         padding={10}
         y={iRadius}
